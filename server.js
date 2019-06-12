@@ -19,6 +19,13 @@ const db = knex({
     }
 });
 
+console.log("host", process.env.POSTGRES_HOST);
+console.log("db", process.env.POSTGRES_DB);
+
+console.log("user", process.env.POSTGRES_USERNAME);
+
+console.log("password", process.env.POSTGRES_PASSWORD);
+
 const app = express();
 
 app.use(morgan("combined"));

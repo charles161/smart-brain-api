@@ -3,18 +3,17 @@ version: "3.7"
 services: #says what are we gonna orchestrate
     #backend
     smart-brain-api:
-        container_name:
-            backend
-            #image: node:carbon-jessie
-        build: ./ #allows us to build fom our own diokcerfile instead of a default image like node:8.11
+        container_name: backend
+        #image: node:carbon-jessie
+        build: ./ #allows us to build fom our own dokcerfile instead of a default image like node:8.11
         command: npm start
         environment:
-            POSTGRES_HOST: postgres #referenced by the service name and by using links
+            POSTGRES_HOST: http://localhost:5432 #referenced by the service name and by using links
             POSTGRES_DB: smart-brain
-            POSTGRES_USERNAME: charles
+            POSTGRES_USERNAME: root
             POSTGRES_PASSWORD: tentacles
         links:
-            - postgres
+            - postgres #service name
         working_dir: /usr/src/smart-brain-api
         ports:
             - "3000:3000"
@@ -26,8 +25,9 @@ services: #says what are we gonna orchestrate
         image: postgres
         ports:
             - "5432:5432"
+
         environment:
             POSTGRES_HOST: postgres #referenced by the service name and by using links
             POSTGRES_DB: smart-brain
-            POSTGRES_USERNAME: charles
+            POSTGRES_USERNAME: root
             POSTGRES_PASSWORD: tentacles
