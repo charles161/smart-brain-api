@@ -14,7 +14,7 @@ const db = knex({
     connection: {
         host: process.env.POSTGRES_HOST,
         database: process.env.POSTGRES_DB,
-        username: process.env.POSTGRES_USERNAME,
+        username: process.env.POSTGRES_USER,
         password: process.env.POSTGRES_PASSWORD
     }
 });
@@ -22,7 +22,7 @@ const db = knex({
 console.log("host", process.env.POSTGRES_HOST);
 console.log("db", process.env.POSTGRES_DB);
 
-console.log("user", process.env.POSTGRES_USERNAME);
+console.log("user", process.env.POSTGRES_USER);
 
 console.log("password", process.env.POSTGRES_PASSWORD);
 
