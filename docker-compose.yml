@@ -8,7 +8,7 @@ services: #says what are we gonna orchestrate
         build: ./ #allows us to build fom our own dokcerfile instead of a default image like node:8.11
         command: npm start
         environment:
-            POSTGRES_URI: postgres://sam:tentacles@postgres:5432/smartbrain
+            POSTGRES_URI: postgres://sam:tentacles@postgres:5432/smartbrain #in postgres:5432 postgres is the service name
 
         links:
             - postgres #service name
