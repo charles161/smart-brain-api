@@ -8,10 +8,7 @@ services: #says what are we gonna orchestrate
         build: ./ #allows us to build fom our own dokcerfile instead of a default image like node:8.11
         command: npm start
         environment:
-            POSTGRES_USER: sam
-            POSTGRES_PASSWORD: tentacles
-            POSTGRES_DB: smart-brain-docker-db
-            POSTGRES_HOST: postgres #referenced by the service name and by using links
+            POSTGRES_URI: postgres://sam:tentacles@postgres:5432/smartbrain
 
         links:
             - postgres #service name
@@ -25,13 +22,15 @@ services: #says what are we gonna orchestrate
     #database
     postgres:
         #sometimes u dont need this that is the image name itself
-        image: postgres
+        build: ./postgres
         ports:
             - "5432:5432"
         environment:
             POSTGRES_USER: sam
             POSTGRES_PASSWORD: tentacles
-            POSTGRES_DB: smart-brain-docker-db
+            #POSTGRES_URL: postgres://sam:tentacles@localhost:5432/smartbrain
+            #POSTGRES_URL: postgres://sam:tentacles@db:5432/smartbrain
+            POSTGRES_DB: smartbrain
             POSTGRES_HOST: postgres #referenced by the service name and by using links
 
         # volumes:

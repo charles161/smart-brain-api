@@ -1,4 +1,4 @@
- FROM node:carbon-jessie
+ FROM node
  WORKDIR /usr/src/smart-brain-api
  COPY ./ ./
  RUN npm install

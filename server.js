@@ -11,25 +11,29 @@ const image = require("./controllers/image");
 
 const db = knex({
     client: "pg",
-    connection: {
-        host: process.env.POSTGRES_HOST,
-        database: process.env.POSTGRES_DB,
-        username: process.env.POSTGRES_USER,
-        password: process.env.POSTGRES_PASSWORD
-    }
+    connection: process.env.POSTGRES_URI
 });
+// .then(() => {
+//     console.log("db connected");
+// })
+// .catch(e => console.log("error connecting", e));
 
-console.log("host", process.env.POSTGRES_HOST);
-console.log("db", process.env.POSTGRES_DB);
-
-console.log("user", process.env.POSTGRES_USER);
-
-console.log("password", process.env.POSTGRES_PASSWORD);
+console.log("host", process.env.POSTGRES_URI);
 
 const app = express();
+const whitelist = ['http://localhost:3001']
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    }
+}
 
-app.use(morgan("combined"));
-app.use(cors());
+app.use(morgan('combined'));
+app.use(cors(corsOptions))
 app.use(bodyParser.json());
 app.get("/cool", (req, res) => {
     res.json("hi there");
@@ -39,6 +43,7 @@ app.get("/", (req, res) => {
 });
 app.post("/signin", signin.handleSignin(db, bcrypt));
 app.post("/register", (req, res) => {
+    console.log("register...")
     register.handleRegister(req, res, db, bcrypt);
 });
 app.get("/profile/:id", (req, res) => {
